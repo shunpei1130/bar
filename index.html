@@ -22,6 +22,54 @@
     .container { max-width: 960px; margin: 0 auto; padding: 48px 20px 0; position: relative; z-index: 1; }
     @media(max-width:800px) { .container { padding: 24px 5vw 0; } }
     h2.section-title { font-size: 1.4em; font-weight: 700; text-align: center; margin-bottom: 24px; letter-spacing: .06em; }
+    
+    .container_concept { 
+      max-width: 960px; 
+      margin: 0 auto; 
+      padding: 48px 20px 0; 
+      position: relative; 
+      z-index: 1;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    @media(max-width:800px) { 
+      .container_concept { 
+        padding: 24px 5vw 0; 
+      }
+      .concept {
+        font-size: 1em;
+        line-height: 1.8;
+      }
+    }
+    h2.section-title { 
+      font-size: 1.4em; 
+      font-weight: 700; 
+      text-align: center; 
+      margin-bottom: 24px; 
+      letter-spacing: .06em;
+      transform: translateY(-20px);
+    }
+
+    .concept {
+      text-align: center;
+      line-height: 2;
+      max-width: 800px;
+      margin: 0 10%;
+      font-size: 0.5em;
+      letter-spacing: .05em;
+      overflow: hidden;
+      white-space: pre-wrap;
+      border-right: 2px solid #E10600;
+      min-height: 4em;
+    }
+
+    @keyframes blink-caret {
+      from, to { border-color: transparent }
+      50% { border-color: #E10600 }
+    }
 
     /* ---------- HEADER ---------- */
     header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
@@ -42,7 +90,7 @@
     .hero-title1 { font-family: 'Noto Serif JP', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: .1em; margin: 0; text-shadow: 0 3px 18px rgba(0,0,0,.8); transform: translateY(30px); animation: slideUp 1.2s ease-out forwards .7s; }
     .hero-title2 { font-family: 'Noto Serif JP', serif; font-size: 6rem; font-weight: 700; margin: 0 0 2rem; text-shadow: 0 3px 18px rgba(0,0,0,.8); transform: translateY(30px); animation: slideUp 1.2s ease-out forwards .7s; }
     .accent-line { display: block; width: 60px; height: 1.5px; background: #E10600; margin: 1.8rem auto; transform: scaleX(0); animation: expandLine 1s ease-out forwards 1s; }
-    .hero-definition { font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 300; line-height: 1.9; letter-spacing: .12em; margin-bottom: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,.8); transform: translateY(20px); opacity: 0; animation: slideUp 1.2s ease-out forwards 1.2s; }
+    .hero-definition { font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 300; padding: 0 7%; line-height: 1.9; letter-spacing: .12em; margin-bottom: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,.8); transform: translateY(20px); opacity: 0; animation: slideUp 1.2s ease-out forwards 1.2s; }
     .hero-source { font-family: 'Helvetica Neue', sans-serif; font-size: .7rem; font-style: italic; color: #E10600; letter-spacing: .08em; transform: translateY(15px); opacity: 0; animation: slideUp 1s ease-out forwards 1.6s; }
 
     @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
@@ -58,13 +106,28 @@
       position: relative;
       width: 100%;
       height: 100vh;
-      background-size: cover;
-      background-position: center;
+      overflow: hidden;
       display: flex;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
     }
+
+    .teaser-bg {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-size: cover;
+      background-position: center;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
+    }
+
+    .teaser-bg.active {
+      opacity: 1;
+    }
+
     .teaser-overlay {
       position: absolute;
       top: 0;
@@ -80,6 +143,11 @@
       color: #fff;
       text-align: center;
       padding: 0 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
     }
     .teaser-content h2 {
       font-size: 3rem;
@@ -167,6 +235,7 @@
     }
 
     @media(max-width:800px) {
+      .hero-title2 { font-size: 5rem; }
       header { flex-direction: column; gap: 20px; }
       nav { 
         flex-wrap: wrap; 
@@ -184,7 +253,7 @@
         border-color: #E10600;
         background: rgba(225,6,0,0.1);
       }
-      .teaser-section { height: 70vh; }
+      .teaser-section { height: 100vh; }
       .teaser-content h2 { font-size: 2rem; }
       .teaser-content p { font-size: .95rem; }
       .teaser-menu-list li { font-size: 1rem; }
@@ -253,7 +322,7 @@
     </div>
 
     <div class="main-content">
-      <div class="container">
+      <div class="container_concept">
         <!-- CONCEPT -->
         <h2 class="section-title">music cafe&bar 回帰 -KAIKI- について</h2>
         <p class="concept">
@@ -263,7 +332,10 @@
       </div>
 
       <!-- MENU SECTION -->
-      <section id="menuSection" class="teaser-section" style="background-image: url('images/teaser/menu.jpg');">
+      <section id="menuSection" class="teaser-section">
+        <div class="teaser-bg" style="background-image: url('images/teaser/menu1.jpg');"></div>
+        <div class="teaser-bg" style="background-image: url('images/teaser/menu2.jpg');"></div>
+        <div class="teaser-bg" style="background-image: url('images/teaser/menu3.jpg');"></div>
         <div class="teaser-overlay"></div>
         <div class="teaser-content">
           <h2>MENU</h2>
@@ -281,7 +353,10 @@
       </section>
 
       <!-- ART & DESIGN SECTION -->
-      <section id="artSection" class="teaser-section" style="background-image: url('images/teaser/art.jpg');">
+      <section id="artSection" class="teaser-section">
+        <div class="teaser-bg" style="background-image: url('images/teaser/art1.jpg');"></div>
+        <div class="teaser-bg" style="background-image: url('images/teaser/art2.jpg');"></div>
+        <div class="teaser-bg" style="background-image: url('images/teaser/art3.jpg');"></div>
         <div class="teaser-overlay"></div>
         <div class="teaser-content">
           <h2>ART &amp; DESIGN</h2>
@@ -296,7 +371,10 @@
       </section>
 
       <!-- EVENT SECTION -->
-      <section id="eventSection" class="teaser-section" style="background-image: url('images/teaser/event.jpg');">
+      <section id="eventSection" class="teaser-section">
+        <div class="teaser-bg" style="background-image: url('images/teaser/event1.jpg');"></div>
+        <div class="teaser-bg" style="background-image: url('images/teaser/event2.jpg');"></div>
+        <div class="teaser-bg" style="background-image: url('images/teaser/event3.jpg');"></div>
         <div class="teaser-overlay"></div>
         <div class="teaser-content">
           <h2>EVENT</h2>
@@ -438,6 +516,60 @@
         }
       });
       animate();
+    });
+
+    /* ---------------- TYPING ANIMATION ---------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const concept = document.querySelector('.concept');
+      const text = concept.textContent.trim();
+      concept.textContent = '';
+      
+      let i = 0;
+      const typeWriter = () => {
+        if (i < text.length) {
+          concept.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeWriter, 30);
+        } else {
+          // タイピング完了後、カーソルを非表示
+          concept.style.borderRight = 'none';
+        }
+      };
+      
+      // Intersection Observer to start animation when element is visible
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            typeWriter();
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { 
+        threshold: 0.5,
+        rootMargin: '0px'
+      });
+      
+      observer.observe(concept);
+    });
+
+    /* ---------------- TEASER BACKGROUND SLIDESHOW ---------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const sections = document.querySelectorAll('.teaser-section:not(#contactSection)');
+      
+      sections.forEach(section => {
+        const backgrounds = section.querySelectorAll('.teaser-bg');
+        let current = 0;
+        
+        // Set first background as active
+        backgrounds[0].classList.add('active');
+        
+        // Change background every 5 seconds
+        setInterval(() => {
+          backgrounds[current].classList.remove('active');
+          current = (current + 1) % backgrounds.length;
+          backgrounds[current].classList.add('active');
+        }, 5000);
+      });
     });
   </script>
 </body>
