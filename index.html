@@ -5,6 +5,7 @@
   <title>music cafe&bar 回帰 -KAIKI-</title>
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <style>
+    /* ---------- FONT & BASE ---------- */
     @import url('https://fonts.googleapis.com/css2?family=Helvetica+Neue:wght@400;700&family=Noto+Serif+JP:wght@300;500;700&display=swap');
     body {
       background: #000;
@@ -13,402 +14,219 @@
       margin: 0;
       padding: 0;
       letter-spacing: 0.01em;
-      cursor: none; /* デフォルトカーソルを非表示 */
+      cursor: none; /* hide system cursor */
     }
-    .container {
-      max-width: 950px;
-      margin: 0 auto;
-      padding: 48px 20px 0 20px;
+    a { color: inherit; text-decoration: none; }
+
+    /* ---------- LAYOUT HELPERS ---------- */
+    .container { max-width: 960px; margin: 0 auto; padding: 48px 20px 0; position: relative; z-index: 1; }
+    @media(max-width:800px) { .container { padding: 24px 5vw 0; } }
+    h2.section-title { font-size: 1.4em; font-weight: 700; text-align: center; margin-bottom: 24px; letter-spacing: .06em; }
+
+    /* ---------- HEADER ---------- */
+    header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; }
+    .logo { height: 60px; }
+    nav { display: flex; gap: 38px; }
+    nav a { font-weight: 700; font-size: 1.05em; border-bottom: 2px solid transparent; padding-bottom: 4px; transition: border .25s; }
+    nav a:hover { border-bottom: 2px solid #E10600; }
+
+    /* ---------- HERO SLIDESHOW ---------- */
+    .slideshow { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: 0; overflow: hidden; }
+    .slideshow-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-size: cover; background-position: center; opacity: 0; transition: opacity 1.5s ease-in-out; }
+    .slideshow-image.active { opacity: 1; }
+    .overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,.5); }
+
+    /* ---------- HERO TEXT ---------- */
+    .hero-text { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); z-index: 2; text-align: center; width: 90%; max-width: 900px; opacity: 0; animation: fadeIn 1.5s ease-out forwards .5s; }
+    .hero-title { font-family: 'Noto Serif JP', serif; font-size: 1.5rem; font-weight: 700; letter-spacing: .1em; line-height: 1.2; margin-bottom: 2rem; text-shadow: 0 3px 18px rgba(0,0,0,.8); transform: translateY(30px); animation: slideUp 1.2s ease-out forwards .7s; }
+    .hero-title1 { font-family: 'Noto Serif JP', serif; font-size: 1.2rem; font-weight: 700; letter-spacing: .1em; margin: 0; text-shadow: 0 3px 18px rgba(0,0,0,.8); transform: translateY(30px); animation: slideUp 1.2s ease-out forwards .7s; }
+    .hero-title2 { font-family: 'Noto Serif JP', serif; font-size: 6rem; font-weight: 700; margin: 0 0 2rem; text-shadow: 0 3px 18px rgba(0,0,0,.8); transform: translateY(30px); animation: slideUp 1.2s ease-out forwards .7s; }
+    .accent-line { display: block; width: 60px; height: 1.5px; background: #E10600; margin: 1.8rem auto; transform: scaleX(0); animation: expandLine 1s ease-out forwards 1s; }
+    .hero-definition { font-family: 'Noto Serif JP', serif; font-size: 1rem; font-weight: 300; line-height: 1.9; letter-spacing: .12em; margin-bottom: 1.2rem; text-shadow: 0 2px 10px rgba(0,0,0,.8); transform: translateY(20px); opacity: 0; animation: slideUp 1.2s ease-out forwards 1.2s; }
+    .hero-source { font-family: 'Helvetica Neue', sans-serif; font-size: .7rem; font-style: italic; color: #E10600; letter-spacing: .08em; transform: translateY(15px); opacity: 0; animation: slideUp 1s ease-out forwards 1.6s; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    @keyframes expandLine { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+    /* ---------- MAIN CONTENT WRAPPER ---------- */
+    .content-wrapper { position: relative; z-index: 1; min-height: 100vh; padding-top: 100vh; background: linear-gradient(to bottom, transparent, rgba(0,0,0,.85) 80%, #000 100%); }
+    .main-content { background: #000; padding: 60px 0 0; }
+
+    /* ---------- FULLSCREEN TEASER SECTIONS ---------- */
+    .teaser-section {
       position: relative;
-      z-index: 1;
-    }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 32px;
-    }
-    .logo {
-      height: 60px;
-    }
-    nav {
-      display: flex;
-      gap: 38px;
-    }
-    nav a {
-      color: #fff;
-      text-decoration: none;
-      font-weight: 700;
-      font-size: 1.09em;
-      letter-spacing: 0.05em;
-      border-bottom: 2.5px solid transparent;
-      padding-bottom: 4px;
-      transition: border 0.22s;
-    }
-    nav a:hover {
-      border-bottom: 2.5px solid #E10600;
-    }
-    
-    /* Fullscreen slideshow */
-    .slideshow {
-      position: fixed;
-      top: 0;
-      left: 0;
       width: 100%;
       height: 100vh;
-      z-index: 0;
-      overflow: hidden;
-    }
-    .slideshow-image {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
       background-size: cover;
       background-position: center;
-      opacity: 0;
-      transition: opacity 1.5s ease-in-out;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-    .slideshow-image.active {
-      opacity: 1;
-    }
-    .overlay {
+    .teaser-overlay {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.5);
+      background: rgba(0, 0, 0, 0.55);
     }
-    .content-wrapper {
+    .teaser-content {
       position: relative;
-      z-index: 1;
-      min-height: 100vh;
-      padding-top: 100vh;
-      background: linear-gradient(to bottom, transparent, rgba(0,0,0,0.85) 80%, #000 100%);
-    }
-    .main-content {
-      background: #000;
-      padding-top: 50px;
-    }
-    
-    .catchphrase {
-      margin: 38px 0 24px 0;
-      font-size: 1.28em;
-      font-weight: 700;
-      color: #fff;
-      letter-spacing: 0.07em;
-      line-height: 1.7;
-      text-align: center;
-    }
-    .definition {
-      font-size: 1em;
-      font-style: italic;
-      color: #E10600;
-      text-align: center;
-      margin-bottom: 18px;
-      margin-top: 8px;
-    }
-    .concept {
-      text-align: center;
-      font-size: 1.08em;
-      margin-bottom: 36px;
-      color: #fff;
-      line-height: 2;
+      z-index: 2;
       max-width: 800px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    .nav-sections {
-      display: flex;
-      justify-content: center;
-      gap: 30px;
-      margin: 32px 0 44px 0;
-    }
-    .nav-section {
-      background: rgba(24,24,24,0.84);
-      border-radius: 19px;
-      padding: 26px 38px;
-      text-align: center;
-      min-width: 140px;
-      border: 1.5px solid #E10600;
-      box-shadow: 0 3px 16px rgba(0,0,0,0.22);
-      transition: box-shadow 0.18s, background 0.18s;
-    }
-    .nav-section:hover {
-      background: #1a1a1a;
-      box-shadow: 0 4px 20px #E1060055;
-    }
-    .nav-section a {
       color: #fff;
-      font-size: 1.12em;
+      text-align: center;
+      padding: 0 20px;
+    }
+    .teaser-content h2 {
+      font-size: 3rem;
       font-weight: 700;
-      text-decoration: none;
-      letter-spacing: 0.04em;
-      display: block;
+      letter-spacing: .08em;
+      margin-bottom: 1rem;
+      color: #E10600;
+    }
+    .teaser-content p {
+      font-size: 1.2rem;
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    .teaser-menu-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 auto;
+      max-width: 300px;
+      text-align: left;
+    }
+    .teaser-menu-list li {
+      display: flex;
+      justify-content: space-between;
+      font-size: 1.1rem;
       margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+      padding-bottom: 4px;
     }
-    .nav-section .desc {
-      color: #ccc;
-      font-size: 0.92em;
-      font-weight: 400;
+    .teaser-menu-list li span.price { color: #E10600; font-weight: 700; }
+    .view-more {
+      display: inline-block;
+      background: transparent;
+      color: #E10600;
+      font-weight: 700;
+      border: 2px solid #E10600;
+      border-radius: 50px;
+      padding: 12px 30px;
+      font-size: 1.1em;
+      letter-spacing: .08em;
+      margin-top: 20px;
+      transition: all .3s ease;
     }
+    .view-more:hover {
+      background: #E10600;
+      color: #fff;
+    }
+
+    /* ---------- RESERVE BUTTON ---------- */
     .reserve-btn {
       display: block;
       background: #E10600;
       color: #fff;
-      font-weight: bold;
-      border: none;
+      font-weight: 700;
       border-radius: 50px;
       padding: 16px 42px;
-      font-size: 1.13em;
-      letter-spacing: 0.08em;
-      margin: 28px auto 18px auto;
-      text-decoration: none;
+      font-size: 1.1em;
+      letter-spacing: .08em;
+      margin: 40px auto;
+      width: 260px;
       text-align: center;
-      width: 270px;
-      transition: background 0.2s;
+      transition: background .2s;
     }
-    .reserve-btn:hover {
-      background: #b50000;
-    }
-    .contact-info {
-      margin: 38px 0 10px 0;
-      font-size: 0.99em;
-      text-align: center;
-    }
+    .reserve-btn:hover { background: #b50000; }
+
+    /* ---------- CONTACT / MAP / FOOTER ---------- */
+    .contact-info { text-align: center; font-size: .96em; margin: 40px 0 12px; line-height: 1.7; }
     .map {
       width: 100%;
       height: 250px;
-      margin: 16px 0 22px 0;
+      margin: 16px 0 22px;
       border-radius: 14px;
       overflow: hidden;
-      box-shadow: 0 3px 18px rgba(0,0,0,0.23);
+      box-shadow: 0 3px 18px rgba(0,0,0,.23);
     }
-    .sns {
-      display: flex;
-      gap: 22px;
-      justify-content: center;
-      margin: 18px 0 0 0;
+    .map iframe { width: 100%; height: 100%; border: 0; }
+    .sns { display: flex; gap: 20px; justify-content: center; margin-top: 20px; }
+    .sns img { width: 32px; height: 32px; filter: invert(1); transition: filter .22s; }
+    .sns a:hover img { filter: invert(34%) sepia(92%) saturate(6565%) hue-rotate(356deg) brightness(91%) contrast(130%); }
+    footer { margin-top: 38px; text-align: center; color: #888; font-size: .88em; letter-spacing: .04em; padding-bottom: 32px; }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media(max-width:1200px) { 
+      .teaser-content h2 { font-size: 2.4rem; } 
+      .teaser-content p { font-size: 1rem; } 
     }
-    .sns a img {
-      width: 32px;
-      height: 32px;
-      filter: invert(1);
-      transition: filter 0.22s;
-    }
-    .sns a:hover img {
-      filter: invert(34%) sepia(92%) saturate(6565%) hue-rotate(356deg) brightness(91%) contrast(130%);
-    }
-    footer {
-      margin-top: 38px;
-      text-align: center;
-      color: #888;
-      font-size: 0.88em;
-      letter-spacing: 0.04em;
-      padding-bottom: 32px;
-    }
-    @media (max-width: 800px) {
-      .container { padding: 22px 4vw 0 4vw; }
-      .nav-sections { flex-direction: column; gap: 18px; }
-      .nav-section { width: 100%; min-width: unset; }
-    }
-    
-    /* u30b9u30e9u30a4u30c9u30b7u30e7u30fcu4e0au306eu30c6u30adu30b9u30c8 */
-    .hero-text {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 2;
-      text-align: center;
-      width: 90%;
-      max-width: 900px;
-      opacity: 0;
-      animation: fadeIn 1.5s ease-out forwards 0.5s;
-    }
-    
-    .hero-title {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1.5rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      line-height: 1.2;
-      margin-bottom: 2rem;
-      text-shadow: 0 3px 18px rgba(0,0,0,0.8);
-      transform: translateY(30px);
-      animation: slideUp 1.2s ease-out forwards 0.7s;
-    }
-    .hero-title1 {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1.2rem;
-      font-weight: 700;
-      letter-spacing: 0.1em;
-      line-height: 1.2;
-      margin-bottom: 0px;
-      text-shadow: 0 3px 18px rgba(0,0,0,0.8);
-      transform: translateY(30px);
-      animation: slideUp 1.2s ease-out forwards 0.7s;
-    }
-    .hero-title2 {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 6.2rem;
-      font-weight: 700;
-      margin-top: 0px;
-      letter-spacing: 0.1em;
-      line-height: 1.2;
-      margin-bottom: 2rem;
-      text-shadow: 0 3px 18px rgba(0,0,0,0.8);
-      transform: translateY(30px);
-      animation: slideUp 1.2s ease-out forwards 0.7s;
-    }
-    
-    .hero-definition {
-      font-family: 'Noto Serif JP', serif;
-      font-size: 1rem;
-      font-weight: 300;
-      line-height: 1.9;
-      letter-spacing: 0.12em;
-      margin-bottom: 1.2rem;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.8);
-      transform: translateY(20px);
-      opacity: 0;
-      animation: slideUp 1.2s ease-out forwards 1.2s;
-    }
-    
-    .hero-source {
-      font-family: 'Helvetica Neue', sans-serif;
-      font-size: 0.7rem;
-      font-style: italic;
-      color: #E10600;
-      letter-spacing: 0.08em;
-      transform: translateY(15px);
-      opacity: 0;
-      animation: slideUp 1s ease-out forwards 1.6s;
-    }
-    
-    .accent-line {
-      display: block;
-      width: 60px;
-      height: 1.5px;
-      background: #E10600;
-      margin: 1.8rem auto;
-      transform: scaleX(0);
-      animation: expandLine 1s ease-out forwards 1s;
-    }
-    
-    /* u30a2u30cbu30e1u30fcu30b7u30e7u30f3 */
-    @keyframes fadeIn {
-      from { opacity: 0; }
-      to { opacity: 1; }
-    }
-    
-    @keyframes slideUp {
-      from { 
-        transform: translateY(30px);
-        opacity: 0;
+
+    @media(max-width:800px) {
+      header { flex-direction: column; gap: 20px; }
+      nav { 
+        flex-wrap: wrap; 
+        justify-content: center; 
+        gap: 20px; 
+        width: 100%;
       }
-      to { 
-        transform: translateY(0);
-        opacity: 1; 
+      nav a { 
+        font-size: 0.95em; 
+        padding: 8px 12px;
+        border: 1px solid rgba(255,255,255,0.2);
+        border-radius: 4px;
       }
-    }
-    
-    @keyframes expandLine {
-      from { transform: scaleX(0); }
-      to { transform: scaleX(1); }
-    }
-    
-    /* u30ecu30b9u30ddu30f3u30b7u30d6u8abfu6574 */
-    @media (max-width: 800px) {
-      .hero-title { font-size: 2.8rem; }
-      .hero-definition { font-size: 0.9rem; }
-      .hero-source { font-size: 0.6rem; }
-    }
-    
-    /* カスタムカーソル */
-    .cursor-dot,
-    .cursor-dot-outline {
-      pointer-events: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      border-radius: 50%;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-      transition: opacity 0.3s ease;
-      z-index: 9999;
-    }
-    
-    .cursor-dot {
-      width: 8px;
-      height: 8px;
-      background-color: #E10600;
-    }
-    
-    .cursor-dot-outline {
-      width: 40px;
-      height: 40px;
-      background-color: rgba(225, 6, 0, 0.1);
-      border: 1px solid rgba(225, 6, 0, 0.5);
-    }
-    
-    /* ホバー状態のカーソル */
-    .cursor-hover .cursor-dot {
-      transform: translate(-50%, -50%) scale(1.5);
-      background-color: #fff;
-    }
-    
-    .cursor-hover .cursor-dot-outline {
-      transform: translate(-50%, -50%) scale(0.8);
-      background-color: rgba(225, 6, 0, 0.2);
-    }
-    
-    /* リンクにホバーしたときのスタイル */
-    a, button, .nav-section, .reserve-btn {
-      cursor: none;
-    }
-    
-    /* カーソルトレイル */
-    .cursor-trail {
-      pointer-events: none;
-      position: fixed;
-      width: 5px;
-      height: 5px;
-      background: rgba(225, 6, 0, 0.3);
-      border-radius: 50%;
-      z-index: 9998;
-      opacity: 0;
-      transform: translate(-50%, -50%);
-    }
-    
-    /* レスポンシブ対応 - モバイルではカスタムカーソルを無効化 */
-    @media (max-width: 768px) {
-      body {
-        cursor: auto;
+      nav a:hover { 
+        border-color: #E10600;
+        background: rgba(225,6,0,0.1);
       }
-      .cursor-dot,
-      .cursor-dot-outline,
-      .cursor-trail {
-        display: none;
-      }
+      .teaser-section { height: 70vh; }
+      .teaser-content h2 { font-size: 2rem; }
+      .teaser-content p { font-size: .95rem; }
+      .teaser-menu-list li { font-size: 1rem; }
+      .reserve-btn { width: 80%; }
     }
+
+    @media(max-width:480px) {
+      nav { gap: 10px; }
+      nav a { 
+        font-size: 0.9em;
+        padding: 6px 10px;
+      }
+      .logo { height: 50px; }
+    }
+
+    @media(max-width:768px) { 
+      body { cursor: auto; } 
+      .cursor-dot, .cursor-dot-outline, .cursor-trail { display: none; } 
+    }
+
+    /* ---------- CUSTOM CURSOR ---------- */
+    .cursor-dot, .cursor-dot-outline { pointer-events: none; position: fixed; top: 0; left: 0; border-radius: 50%; opacity: 0; transform: translate(-50%,-50%); transition: opacity .3s ease; z-index: 9999; }
+    .cursor-dot { width: 8px; height: 8px; background: #E10600; }
+    .cursor-dot-outline { width: 40px; height: 40px; background: rgba(225,6,0,.1); border: 1px solid rgba(225,6,0,.5); }
+    .cursor-hover .cursor-dot { transform: translate(-50%,-50%) scale(1.5); background: #fff; }
+    .cursor-hover .cursor-dot-outline { transform: translate(-50%,-50%) scale(.8); background: rgba(225,6,0,.2); }
+    a, button, .reserve-btn { cursor: none; }
+    .cursor-trail { pointer-events: none; position: fixed; width: 5px; height: 5px; background: rgba(225,6,0,.3); border-radius: 50%; z-index: 9998; opacity: 0; transform: translate(-50%,-50%); }
   </style>
 </head>
 <body>
-  <!-- カスタムカーソル要素 -->
+  <!-- Custom Cursor Elements -->
   <div class="cursor-dot"></div>
   <div class="cursor-dot-outline"></div>
 
-  <!-- Fullscreen slideshow -->
+  <!-- Hero Slideshow -->
   <div class="slideshow">
     <div class="slideshow-image active"></div>
     <div class="slideshow-image"></div>
     <div class="slideshow-image"></div>
     <div class="overlay"></div>
-    
-    <!-- スライドショー上のテキスト -->
+    <!-- Hero Copy -->
     <div class="hero-text">
       <h1 class="hero-title">music cafe&bar</h1>
       <p class="hero-title1">回帰</p>
@@ -419,284 +237,207 @@
     </div>
   </div>
 
+  <!-- MAIN CONTENT -->
   <div class="content-wrapper">
     <div class="container">
+      <!-- header nav -->
       <header>
         <img src="images/logo.jpg" alt="回帰 ロゴ" class="logo">
         <nav>
-          <a href="#menu">MENU</a>
-          <a href="#art">ART & DESIGN</a>
-          <a href="#event">EVENT</a>
-          <a href="#contact">CONTACT</a>
+          <a href="#menuSection">MENU</a>
+          <a href="#artSection">ART &amp; DESIGN</a>
+          <a href="#eventSection">EVENT</a>
+          <a href="#contactSection">CONTACT</a>
         </nav>
       </header>
     </div>
 
     <div class="main-content">
       <div class="container">
-        <div class="catchphrase">
-          music cafe&bar 回帰 -KAIKI- について
-        </div>
- 
-        <div class="concept">
+        <!-- CONCEPT -->
+        <h2 class="section-title">music cafe&bar 回帰 -KAIKI- について</h2>
+        <p class="concept">
           誰かが悩んでいる時や辛い時間を過ごしている時に、このお店に帰って来られる温かい空間を目指しています。<br>
           また、新時代のクリエイターも多く集い、新たな出会いやクリエーションの循環に繋げていく思想を持ち、活動しています。
-        </div>
-
-        <div class="nav-sections">
-          <div class="nav-section" id="menu">
-            <a href="#menu">MENU</a>
-            <div class="desc">飲食や商品メニューなど</div>
-          </div>
-          <div class="nav-section" id="art">
-            <a href="#art">ART & DESIGN</a>
-            <div class="desc">ポートフォリオ形式の作品・実績</div>
-          </div>
-          <div class="nav-section" id="event">
-            <a href="#event">EVENT</a>
-            <div class="desc">コラム形式のイベント情報</div>
-          </div>
-          <div class="nav-section" id="contact">
-            <a href="#contact">CONTACT</a>
-            <div class="desc">お問い合わせフォーム・連絡先</div>
-          </div>
-        </div>
-
-        <a href="#reserve" class="reserve-btn">ご予約はこちら</a>
-
-        <div class="contact-info">
-          屋号：回帰　|　渋谷区桜丘町17-12シブヤジョンソンビル2F<br>
-          TEL：03-5422-3347　|　MAIL：kaikitokyo@gmail.com
-        </div>
-
-        <div class="map">
-          <!-- Google Map埋め込み -->
-          <iframe 
-            src="https://www.google.com/maps?q=渋谷区桜丘町17-12シブヤジョンソンビル2F&output=embed"
-            width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen="">
-          </iframe>
-        </div>
-
-        <div class="sns">
-          <a href="https://www.instagram.com/" target="_blank"><img src="insta_icon.svg" alt="Instagram"></a>
-          <a href="https://x.com/" target="_blank"><img src="x_icon.svg" alt="X"></a>
-          <a href="https://www.facebook.com/" target="_blank"><img src="fb_icon.svg" alt="Facebook"></a>
-        </div>
-
-        <footer>
-          &copy; 2025 music cafe&bar 回帰 -KAIKI-
-        </footer>
+        </p>
       </div>
+
+      <!-- MENU SECTION -->
+      <section id="menuSection" class="teaser-section" style="background-image: url('images/teaser/menu.jpg');">
+        <div class="teaser-overlay"></div>
+        <div class="teaser-content">
+          <h2>MENU</h2>
+          <p>厳選された食材とこだわりのレシピで、心と体を満たす特別なひとときを</p>
+          <ul class="teaser-menu-list">
+            <li>ガーリックチーズトースト <span class="price">600円</span></li>
+            <li>BLTサンドイッチ <span class="price">600円</span></li>
+            <li>アイスコーヒー <span class="price">500円</span></li>
+            <li>コーラフロート <span class="price">1000円</span></li>
+            <li>キリンビール <span class="price">700円</span></li>
+            <li>季節のカクテル <span class="price">800円〜</span></li>
+          </ul>
+          <a href="#" class="view-more">メニューを見る</a>
+        </div>
+      </section>
+
+      <!-- ART & DESIGN SECTION -->
+      <section id="artSection" class="teaser-section" style="background-image: url('images/teaser/art.jpg');">
+        <div class="teaser-overlay"></div>
+        <div class="teaser-content">
+          <h2>ART &amp; DESIGN</h2>
+          <p>クリエイターたちの表現の場として、常に新しいアートとデザインを発信</p>
+          <div class="art-slider">
+            <div class="art-slide active" style="background-image: url('images/art/photo\ \(1\).jpg');"></div>
+            <div class="art-slide" style="background-image: url('images/art/photo\ \(2\).jpg');"></div>
+            <div class="art-slide" style="background-image: url('images/art/photo\ \(3\).jpg');"></div>
+          </div>
+          <a href="#" class="view-more">作品ギャラリー</a>
+        </div>
+      </section>
+
+      <!-- EVENT SECTION -->
+      <section id="eventSection" class="teaser-section" style="background-image: url('images/teaser/event.jpg');">
+        <div class="teaser-overlay"></div>
+        <div class="teaser-content">
+          <h2>EVENT</h2>
+          <p>音楽、アート、デザイン。様々な表現が交差する特別な空間</p>
+          <div class="event-highlight">
+            <p>毎週水曜日: アコースティックライブ</p>
+            <p>毎週金曜日: DJナイト</p>
+            <p>毎月第1土曜日: アーティストトーク</p>
+            <p>毎月第3日曜日: ワークショップ</p>
+          </div>
+          <a href="#" class="view-more">イベントカレンダー</a>
+        </div>
+      </section>
+
+      <!-- CONTACT SECTION -->
+      <section id="contactSection" class="teaser-section" style="background-image: url('images/teaser/contact.jpg');">
+        <div class="teaser-overlay"></div>
+        <div class="teaser-content">
+          <h2>CONTACT</h2>
+          <p>あなたの特別な時間を、私たちと一緒に</p>
+          <div class="contact-preview">
+            <p>ご予約・お問い合わせはこちら</p>
+            <p class="email">kaikitokyo@gmail.com</p>
+            <p>営業時間: 12:00 - 24:00</p>
+            <p>定休日: 毎週火曜日</p>
+          </div>
+          <a href="#contactArea" class="view-more">お問い合わせ</a>
+        </div>
+      </section>
+
+      <!-- RESERVE BUTTON -->
+      <a href="#reserve" class="reserve-btn">ご予約はこちら</a>
+
+      <!-- CONTACT + MAP -->
+      <div id="contactArea" class="contact-info">
+        屋号: 回帰 | 渋谷区桜丘町17-12シブヤジョンソンビル2F<br>
+        TEL: 03-5422-3347 | MAIL: kaikitokyo@gmail.com
+      </div>
+      <div class="map">
+        <iframe src="https://www.google.com/maps?q=渋谷区桜丘町17-12シブヤジョンソンビル2F&output=embed" width="100%" height="100%" frameborder="0" style="border:0;" allowfullscreen></iframe>
+      </div>
+
+      <!-- SNS -->
+      <div class="sns">
+        <a href="https://www.instagram.com/" target="_blank"><img src="insta_icon.svg" alt="Instagram"></a>
+        <a href="https://x.com/" target="_blank"><img src="x_icon.svg" alt="X"></a>
+        <a href="https://www.facebook.com/" target="_blank"><img src="fb_icon.svg" alt="Facebook"></a>
+      </div>
+
+      <footer>&copy; 2025 music cafe&bar 回帰 -KAIKI-</footer>
     </div>
   </div>
 
+  <!-- ---------- SCRIPTS ---------- -->
   <script>
-    // カスタムカーソルの実装
-    document.addEventListener('DOMContentLoaded', function() {
+    /* ---------------- HERO SLIDESHOW ---------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const heroSlides = document.querySelectorAll('.slideshow-image');
+      const heroImages = [
+        'images/sales/image1.jpg',
+        'images/sales/image2.jpg',
+        'images/sales/image3.jpg',
+        'images/sales/image4.jpg',
+        'images/sales/image5.jpg'
+      ];
+      heroSlides.forEach((s, i) => {
+        s.style.backgroundImage = `url('${heroImages[i % heroImages.length]}')`;
+      });
+      let current = 0;
+      setInterval(() => {
+        heroSlides[current].classList.remove('active');
+        current = (current + 1) % heroSlides.length;
+        heroSlides[current].classList.add('active');
+      }, 5000);
+    });
+
+    /* ---------------- ART SLIDER ---------------- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const artSlides = document.querySelectorAll('.art-slide');
+      let idx = 0;
+      setInterval(() => {
+        artSlides[idx].classList.remove('active');
+        idx = (idx + 1) % artSlides.length;
+        artSlides[idx].classList.add('active');
+      }, 4000);
+    });
+
+    /* ---------------- CUSTOM CURSOR ---------------- */
+    document.addEventListener('DOMContentLoaded', () => {
       const cursorDot = document.querySelector('.cursor-dot');
       const cursorOutline = document.querySelector('.cursor-dot-outline');
-      const links = document.querySelectorAll('a, button, .nav-section, .reserve-btn');
-      
-      // カーソルの動きを滑らかにするための変数
-      let mouseX = 0;
-      let mouseY = 0;
-      let outlineX = 0;
-      let outlineY = 0;
-      let dotX = 0;
-      let dotY = 0;
-      
-      // トレイル効果用の配列
-      const trails = [];
-      const trailCount = 15;
-      
-      // トレイル要素を作成
+      const hoverables = document.querySelectorAll('a, button, .reserve-btn');
+      let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0, dotX = 0, dotY = 0;
+      const trails = [], trailCount = 15;
       for (let i = 0; i < trailCount; i++) {
-        const trail = document.createElement('div');
-        trail.className = 'cursor-trail';
-        document.body.appendChild(trail);
-        trails.push({
-          element: trail,
-          x: 0,
-          y: 0,
-          alpha: 0,
-          delay: i * 2
-        });
+        const t = document.createElement('div');
+        t.className = 'cursor-trail';
+        document.body.appendChild(t);
+        trails.push({ el: t, x: 0, y: 0, alpha: 0 });
       }
-      
-      // マウス位置の更新
-      window.addEventListener('mousemove', (e) => {
+      window.addEventListener('mousemove', e => {
         mouseX = e.clientX;
         mouseY = e.clientY;
-        // 初回表示時にカーソルを表示
         if (cursorDot.style.opacity === '' || cursorDot.style.opacity === '0') {
           cursorDot.style.opacity = 1;
           cursorOutline.style.opacity = 1;
         }
       });
-      
-      // リンクにホバーしたときの効果
-      links.forEach(link => {
-        link.addEventListener('mouseenter', () => {
+      hoverables.forEach(el => {
+        el.addEventListener('mouseenter', () => {
           cursorDot.classList.add('cursor-hover');
           cursorOutline.classList.add('cursor-hover');
         });
-        link.addEventListener('mouseleave', () => {
+        el.addEventListener('mouseleave', () => {
           cursorDot.classList.remove('cursor-hover');
           cursorOutline.classList.remove('cursor-hover');
         });
       });
-      
-      // アニメーションフレーム
-      function animateCursor() {
-        // アウトラインカーソルの滑らかな動き
-        const outlineSpeed = 0.1;
-        outlineX += (mouseX - outlineX) * outlineSpeed;
-        outlineY += (mouseY - outlineY) * outlineSpeed;
-        
-        // ドットカーソルの滑らかな動き（より速く）
-        const dotSpeed = 0.3;
-        dotX += (mouseX - dotX) * dotSpeed;
-        dotY += (mouseY - dotY) * dotSpeed;
-        
-        // カーソル位置の更新
-        cursorDot.style.transform = `translate(${Math.round(dotX)}px, ${Math.round(dotY)}px) translate(-50%, -50%)`;
-        cursorOutline.style.transform = `translate(${Math.round(outlineX)}px, ${Math.round(outlineY)}px) translate(-50%, -50%)`;
-        
-        // トレイル効果の更新
-        trails.forEach((trail, index) => {
-          const delayedIndex = (index + trails.length) % trails.length;
-          const delay = delayedIndex * 3;
-          
-          setTimeout(() => {
-            // 徐々にフェードアウト
-            trail.alpha -= 0.03;
-            if (trail.alpha < 0) trail.alpha = 0;
-            
-            // 位置の更新と表示
-            trail.element.style.left = `${mouseX}px`;
-            trail.element.style.top = `${mouseY}px`;
-            trail.element.style.opacity = trail.alpha;
-            trail.element.style.transform = `translate(-50%, -50%) scale(${0.5 + (index / trails.length) * 0.5})`;
-            
-            // 新しい位置にカーソルが移動したら再表示
-            if (trail.alpha === 0 && 
-                Math.abs(trail.x - mouseX) > 10 && 
-                Math.abs(trail.y - mouseY) > 10) {
-              trail.alpha = 0.3;
-              trail.x = mouseX;
-              trail.y = mouseY;
-            }
-          }, delay);
+      function animate() {
+        outlineX += (mouseX - outlineX) * .1;
+        outlineY += (mouseY - outlineY) * .1;
+        dotX += (mouseX - dotX) * .3;
+        dotY += (mouseY - dotY) * .3;
+        cursorDot.style.transform = `translate(${dotX}px, ${dotY}px) translate(-50%, -50%)`;
+        cursorOutline.style.transform = `translate(${outlineX}px, ${outlineY}px) translate(-50%, -50%)`;
+        trails.forEach(tr => {
+          tr.alpha -= 0.03;
+          if (tr.alpha < 0) tr.alpha = 0;
+          tr.el.style.left = `${mouseX}px`;
+          tr.el.style.top = `${mouseY}px`;
+          tr.el.style.opacity = tr.alpha;
         });
-        
-        requestAnimationFrame(animateCursor);
+        requestAnimationFrame(animate);
       }
-      
-      // カーソルが画面外に出たときに非表示にする
-      document.addEventListener('mouseout', (e) => {
+      document.addEventListener('mouseout', e => {
         if (e.relatedTarget === null) {
           cursorDot.style.opacity = 0;
           cursorOutline.style.opacity = 0;
         }
       });
-      
-      // アニメーション開始
-      animateCursor();
-    });
-    
-    // Slideshow functionality
-    document.addEventListener('DOMContentLoaded', function() {
-      const slides = document.querySelectorAll('.slideshow-image');
-      let currentSlide = 0;
-      // 絶対パスから相対パスに変更
-      const imageFolder = 'images/sales/';
-      
-      // デバッグ用にコンソールに情報を表示
-      console.log('スライドショー初期化中...');
-      console.log('画像フォルダパス:', imageFolder);
-      
-      // Assuming these image files exist in the /images/sales/ directory
-      // Update this array with your actual image filenames
-      const imageFiles = [
-        'image1.jpg',
-        'image2.jpg',
-        'image3.jpg',
-        'image4.jpg',
-        'image5.jpg',
-        'image6.jpg'
-      ];
-      
-      // フォールバック用の画像 - 実際の画像が読み込めない場合に使用
-      const fallbackImages = [
-        'https://source.unsplash.com/random/1600x900/?bar,cafe,night,dark',
-        'https://source.unsplash.com/random/1600x900/?music,jazz,bar',
-        'https://source.unsplash.com/random/1600x900/?cafe,lounge,dark'
-      ];
-      
-      console.log('画像ファイル一覧:', imageFiles);
-      
-      // Function to shuffle array (Fisher-Yates algorithm)
-      function shuffleArray(array) {
-        for (let i = array.length - 1; i > 0; i--) {
-          const j = Math.floor(Math.random() * (i + 1));
-          [array[i], array[j]] = [array[j], array[i]];
-        }
-        return array;
-      }
-      
-      // Shuffle images and assign to slides
-      let shuffledImages = shuffleArray([...imageFiles]);
-      console.log('シャッフル後の画像順序:', shuffledImages);
-      
-      // 画像読み込みエラー処理関数
-      function handleImageError(slideElement, index) {
-        console.log('画像の読み込みに失敗したため、フォールバック画像を使用します');
-        const fallbackIndex = index % fallbackImages.length;
-        slideElement.style.backgroundImage = `url('${fallbackImages[fallbackIndex]}')`;
-      }
-      
-      // Set initial background images for slides
-      slides.forEach((slide, index) => {
-        if (index < shuffledImages.length) {
-          const imagePath = `${imageFolder}${shuffledImages[index]}`;
-          console.log(`スライド ${index+1} に設定する画像パス:`, imagePath);
-          
-          // 画像の存在確認
-          const tempImg = new Image();
-          tempImg.onerror = () => handleImageError(slide, index);
-          tempImg.onload = () => {
-            slide.style.backgroundImage = `url('${imagePath}')`;
-          };
-          tempImg.src = imagePath;
-        }
-      });
-      
-      function nextSlide() {
-        slides[currentSlide].classList.remove('active');
-        currentSlide = (currentSlide + 1) % slides.length;
-        slides[currentSlide].classList.add('active');
-        console.log(`スライド ${currentSlide+1} をアクティブに切り替え`);
-        
-        // Optionally, load a new random image for the slide that just became inactive
-        // This creates an endless stream of different images
-        const nextSlideIndex = (currentSlide + slides.length - 1) % slides.length;
-        const randomImage = imageFiles[Math.floor(Math.random() * imageFiles.length)];
-        setTimeout(() => {
-          const newImagePath = `${imageFolder}${randomImage}`;
-          console.log(`スライド ${nextSlideIndex+1} に新しい画像を設定:`, newImagePath);
-          
-          // 画像の存在確認
-          const tempImg = new Image();
-          tempImg.onerror = () => handleImageError(slides[nextSlideIndex], nextSlideIndex);
-          tempImg.onload = () => {
-            slides[nextSlideIndex].style.backgroundImage = `url('${newImagePath}')`;
-          };
-          tempImg.src = newImagePath;
-        }, 1500); // Wait for fade transition to complete
-      }
-      
-      // Change slide every 5 seconds
-      setInterval(nextSlide, 5000);
+      animate();
     });
   </script>
 </body>
