@@ -38,20 +38,43 @@
     /* ---------- PAGE TITLE ---------- */
     .page-title { font-size: 2em; font-weight: 700; text-align: center; margin: 40px 0 16px; letter-spacing: 0.05em; color: #E10600; }
 
-    /* ---------- MENU GALLERY ---------- */
-    .menu-gallery {
+    /* ---------- MENU GRID ---------- */
+    .menu-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
       gap: 20px;
-      margin-top: 32px;
+      margin-top: 24px;
     }
-    .menu-gallery img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
+    .menu-item {
+      position: relative;
+      overflow: hidden;
       border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transform: translateY(20px);
+      animation: fadeIn .7s forwards;
+      animation-delay: calc(var(--i) * 0.05s);
     }
+    .menu-item img {
+      width: 100%;
+      height: 160px;
+      object-fit: cover;
+      transition: transform .4s;
+    }
+    .menu-item:hover img { transform: scale(1.05); }
+    .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 6px 8px;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.95em;
+    }
+    .caption .price { color: #E10600; font-weight: 700; }
+    @keyframes fadeIn { to { opacity: 1; transform: none; } }
+
 
     /* ---------- RESERVE BUTTON ---------- */
     .reserve-btn {
@@ -115,17 +138,103 @@
 
   <!-- MENU CONTENT -->
   <div class="container">
-    <div class="menu-gallery">
-      <!-- サンプル写真を表示 -->
-      <img src="images/food/LINE_ALBUM_フードメニュー_250515_1.jpg" alt="Food 1">
-      <img src="images/food/LINE_ALBUM_フードメニュー_250515_2.jpg" alt="Food 2">
-      <img src="images/food/LINE_ALBUM_フードメニュー_250515_3.jpg" alt="Food 3">
-      <img src="images/food/LINE_ALBUM_フードメニュー_250515_4.jpg" alt="Food 4">
-      <img src="images/food/LINE_ALBUM_フードメニュー_250515_5.jpg" alt="Food 5">
-      <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_1.jpg" alt="Drink 1">
-      <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_2.jpg" alt="Drink 2">
-      <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_3.jpg" alt="Drink 3">
-      <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_4.jpg" alt="Drink 4">
+    <!-- Food Menu -->
+    <div class="menu-category">
+      <h3>Food — フード</h3>
+      <div class="menu-grid">
+        <div class="menu-item" style="--i:1">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_1.jpg" alt="ガーリックトースト">
+          <div class="caption">ガーリックトースト <span class="price">600円</span></div>
+        </div>
+        <div class="menu-item" style="--i:2">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_2.jpg" alt="ピザトースト">
+          <div class="caption">ピザトースト <span class="price">600円</span></div>
+        </div>
+        <div class="menu-item" style="--i:3">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_3.jpg" alt="ハニーバタートースト">
+          <div class="caption">ハニーバタートースト <span class="price">600円</span></div>
+        </div>
+        <div class="menu-item" style="--i:4">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_4.jpg" alt="ガーリックチーズトースト">
+          <div class="caption">ガーリックチーズトースト <span class="price">600円</span></div>
+        </div>
+        <div class="menu-item" style="--i:5">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_5.jpg" alt="ナチョスチップ">
+          <div class="caption">ナチョスチップ <span class="price">400円</span></div>
+        </div>
+        <div class="menu-item" style="--i:6">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_6.jpg" alt="ジャーキー">
+          <div class="caption">ジャーキー <span class="price">500円</span></div>
+        </div>
+        <div class="menu-item" style="--i:7">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_7.jpg" alt="ミックスナッツ">
+          <div class="caption">ミックスナッツ <span class="price">500円</span></div>
+        </div>
+        <div class="menu-item" style="--i:8">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_8.jpg" alt="コンビーフサンドイッチ">
+          <div class="caption">コンビーフサンドイッチ <span class="price">500円</span></div>
+        </div>
+        <div class="menu-item" style="--i:9">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_9.jpg" alt="ハムチーズサンドイッチ">
+          <div class="caption">ハムチーズサンドイッチ <span class="price">500円</span></div>
+        </div>
+        <div class="menu-item" style="--i:10">
+          <img src="images/food/LINE_ALBUM_フードメニュー_250515_10.jpg" alt="BLTサンドイッチ">
+          <div class="caption">BLTサンドイッチ <span class="price">600円</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drink Menu -->
+    <div class="menu-category">
+      <h3>Drink — ドリンク</h3>
+      <div class="menu-grid">
+        <div class="menu-item" style="--i:11">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_1.jpg" alt="ice coffee">
+          <div class="caption">ice coffee <span class="price">500円</span></div>
+        </div>
+        <div class="menu-item" style="--i:12">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_2.jpg" alt="hot coffee">
+          <div class="caption">hot coffee <span class="price">450円</span></div>
+        </div>
+        <div class="menu-item" style="--i:13">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_3.jpg" alt="hot cocoa">
+          <div class="caption">hot cocoa <span class="price">500円</span></div>
+        </div>
+        <div class="menu-item" style="--i:14">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_4.jpg" alt="Cola">
+          <div class="caption">Cola <span class="price">400円</span></div>
+        </div>
+        <div class="menu-item" style="--i:15">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_5.jpg" alt="ginger ale">
+          <div class="caption">ginger ale <span class="price">400円</span></div>
+        </div>
+        <div class="menu-item" style="--i:16">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_6.jpg" alt="Cola float">
+          <div class="caption">Cola float <span class="price">1000円</span></div>
+        </div>
+        <div class="menu-item" style="--i:17">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_7.jpg" alt="melon cream float">
+          <div class="caption">melon cream float <span class="price">1000円</span></div>
+        </div>
+        <div class="menu-item" style="--i:18">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_8.jpg" alt="Non alcohol cocktail">
+          <div class="caption">Non alcohol cocktail <span class="price">800〜1000円</span></div>
+        </div>
+        <div class="menu-item" style="--i:19">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_9.jpg" alt="キリン">
+          <div class="caption">キリン <span class="price">700円</span></div>
+        </div>
+        <div class="menu-item" style="--i:20">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_10.jpg" alt="エビス">
+          <div class="caption">エビス <span class="price">800円</span></div>
+        </div>
+        <div class="menu-item" style="--i:21">
+          <img src="images/drink/LINE_ALBUM_ドリンクメニュー_250515_1.jpg" alt="cocktail">
+          <div class="caption">cocktail <span class="price">800〜1300円</span></div>
+        </div>
+      </div>
+
     </div>
 
     <!-- RESERVE BUTTON -->
