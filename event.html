@@ -46,6 +46,70 @@
       text-transform: uppercase;
     }
 
+    /* ---------- FULLSCREEN PHOTO SECTION ---------- */
+    .fullscreen-photos {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .fullscreen-photo {
+      position: absolute;
+      width: 200px;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      opacity: 0;
+      transition: all 0.5s ease;
+      animation: fadeInOut 8s infinite;
+      pointer-events: auto;
+      cursor: pointer;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+    .fullscreen-photo:hover {
+      transform: scale(1.1) rotate(0deg) !important;
+      opacity: 0.8 !important;
+      z-index: 1;
+    }
+    @keyframes fadeInOut {
+      0% { opacity: 0; }
+      20% { opacity: 0.15; }
+      80% { opacity: 0.15; }
+      100% { opacity: 0; }
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    /* Add different animation delays and positions for each photo */
+    .fullscreen-photo:nth-child(1) { animation-delay: 0s; top: 15%; left: 10%; transform: rotate(-15deg); }
+    .fullscreen-photo:nth-child(2) { animation-delay: 1s; top: 25%; right: 15%; transform: rotate(10deg); }
+    .fullscreen-photo:nth-child(3) { animation-delay: 2s; top: 45%; left: 20%; transform: rotate(-8deg); }
+    .fullscreen-photo:nth-child(4) { animation-delay: 3s; top: 35%; right: 25%; transform: rotate(12deg); }
+    .fullscreen-photo:nth-child(5) { animation-delay: 4s; top: 65%; left: 15%; transform: rotate(-5deg); }
+    .fullscreen-photo:nth-child(6) { animation-delay: 5s; top: 55%; right: 20%; transform: rotate(15deg); }
+    .fullscreen-photo:nth-child(7) { animation-delay: 6s; top: 75%; left: 30%; transform: rotate(-12deg); }
+    .fullscreen-photo:nth-child(8) { animation-delay: 7s; top: 85%; right: 15%; transform: rotate(8deg); }
+    .fullscreen-photo:nth-child(9) { animation-delay: 0.5s; top: 5%; left: 40%; transform: rotate(-10deg); }
+    .fullscreen-photo:nth-child(10) { animation-delay: 1.5s; top: 15%; right: 35%; transform: rotate(5deg); }
+    .fullscreen-photo:nth-child(11) { animation-delay: 2.5s; top: 35%; left: 45%; transform: rotate(-8deg); }
+    .fullscreen-photo:nth-child(12) { animation-delay: 3.5s; top: 45%; right: 40%; transform: rotate(12deg); }
+    .fullscreen-photo:nth-child(13) { animation-delay: 4.5s; top: 65%; left: 35%; transform: rotate(-15deg); }
+    .fullscreen-photo:nth-child(14) { animation-delay: 5.5s; top: 75%; right: 30%; transform: rotate(8deg); }
+    .fullscreen-photo:nth-child(15) { animation-delay: 6.5s; top: 85%; left: 25%; transform: rotate(-5deg); }
+
+    @media(max-width:768px) {
+      .fullscreen-photo {
+        width: 150px;
+        height: 150px;
+      }
+    }
+
     /* ---------- EVENT GALLERY ---------- */
     .event-gallery {
       display: grid;
@@ -232,6 +296,75 @@
         grid-template-columns: 1fr;
       }
     }
+
+    /* ---------- PHOTO MODAL ---------- */
+    .photo-modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .photo-modal.active {
+      display: flex;
+      opacity: 1;
+    }
+    .modal-content {
+      position: relative;
+      max-width: 90%;
+      max-height: 90vh;
+      transform: scale(0.9);
+      transition: transform 0.3s ease;
+    }
+    .modal-content.active {
+      transform: scale(1);
+    }
+    .modal-content img {
+      width: 100%;
+      height: auto;
+      border-radius: 8px;
+      box-shadow: 0 5px 25px rgba(0,0,0,0.3);
+    }
+    .modal-close {
+      position: absolute;
+      top: -40px;
+      right: 0;
+      color: #fff;
+      font-size: 2em;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.3s ease;
+    }
+    .modal-close:hover {
+      transform: rotate(90deg);
+    }
+    .modal-caption {
+      position: absolute;
+      bottom: -40px;
+      left: 0;
+      width: 100%;
+      text-align: center;
+      color: #fff;
+      font-size: 1.1em;
+      opacity: 0;
+      transform: translateY(20px);
+      transition: all 0.3s ease;
+    }
+    .modal-content.active .modal-caption {
+      opacity: 1;
+      transform: translateY(0);
+    }
   </style>
 </head>
 <body>
@@ -259,37 +392,31 @@
     <h2 class="page-title">EVENT</h2>
   </div>
 
-  <!-- EVENT GALLERY -->
-  <div class="container">
-    <div class="event-gallery">
-      <div class="event-image">
-        <img src="images/event1.jpg" alt="ライブイベント">
-        <div class="event-overlay">
-          <h3>LIVE NIGHT</h3>
-          <p>毎週水曜日 19:00〜</p>
-        </div>
-      </div>
-      <div class="event-image">
-        <img src="images/event2.jpg" alt="DJイベント">
-        <div class="event-overlay">
-          <h3>DJ NIGHT</h3>
-          <p>毎週金曜日 22:00〜</p>
-        </div>
-      </div>
-      <div class="event-image">
-        <img src="images/event3.jpg" alt="アーティストトーク">
-        <div class="event-overlay">
-          <h3>ARTIST TALK</h3>
-          <p>毎月第1土曜日 18:00〜</p>
-        </div>
-      </div>
-      <div class="event-image">
-        <img src="images/event4.jpg" alt="ワークショップ">
-        <div class="event-overlay">
-          <h3>WORKSHOP</h3>
-          <p>毎月第3日曜日 15:00〜</p>
-        </div>
-      </div>
+  <!-- FULLSCREEN PHOTOS -->
+  <div class="fullscreen-photos">
+    <img src="images/party/event (1).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (2).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (3).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (4).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (5).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (6).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (7).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (8).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (9).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (10).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (11).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (12).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (13).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (14).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+    <img src="images/party/event (15).jpg" alt="" class="fullscreen-photo" onclick="animatePhoto(this)">
+  </div>
+
+  <!-- PHOTO MODAL -->
+  <div class="photo-modal">
+    <div class="modal-content">
+      <div class="modal-close">&times;</div>
+      <img src="" alt="Enlarged photo">
+      <div class="modal-caption"></div>
     </div>
   </div>
 
@@ -384,6 +511,60 @@
       });
       animate();
     });
+
+    /* ---------------- PHOTO MODAL ---------------- */
+    const modal = document.querySelector('.photo-modal');
+    const modalContent = document.querySelector('.modal-content');
+    const modalImg = modal.querySelector('img');
+    const modalCaption = modal.querySelector('.modal-caption');
+    const modalClose = modal.querySelector('.modal-close');
+    const photos = document.querySelectorAll('.fullscreen-photo');
+
+    photos.forEach(photo => {
+      photo.addEventListener('click', () => {
+        const imgSrc = photo.getAttribute('src');
+        const imgAlt = photo.getAttribute('alt') || 'Event photo';
+        
+        modalImg.setAttribute('src', imgSrc);
+        modalCaption.textContent = imgAlt;
+        
+        modal.classList.add('active');
+        setTimeout(() => {
+          modalContent.classList.add('active');
+        }, 50);
+      });
+    });
+
+    modalClose.addEventListener('click', () => {
+      modalContent.classList.remove('active');
+      setTimeout(() => {
+        modal.classList.remove('active');
+      }, 300);
+    });
+
+    modal.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        modalContent.classList.remove('active');
+        setTimeout(() => {
+          modal.classList.remove('active');
+        }, 300);
+      }
+    });
+
+    /* ---------------- PHOTO ANIMATION ---------------- */
+    function animatePhoto(element) {
+      element.style.animation = 'float 1s ease-in-out';
+      element.style.transform = 'scale(1.2) rotate(0deg)';
+      element.style.opacity = '0.8';
+      element.style.zIndex = '1';
+      
+      setTimeout(() => {
+        element.style.animation = '';
+        element.style.transform = '';
+        element.style.opacity = '';
+        element.style.zIndex = '';
+      }, 1000);
+    }
   </script>
 </body>
 </html>
