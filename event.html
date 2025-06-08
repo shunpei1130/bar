@@ -19,7 +19,7 @@
     a { color: inherit; text-decoration: none; }
 
     /* ---------- CONTAINER ---------- */
-    .container { max-width: 960px; margin: 0 auto; padding: 24px 20px; position: relative; z-index: 1; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 24px 20px; position: relative; z-index: 1; }
     @media(max-width:800px) { .container { padding: 24px 5vw; } }
 
     /* ---------- HEADER ---------- */
@@ -36,67 +36,202 @@
     }
 
     /* ---------- PAGE TITLE ---------- */
-    .page-title { font-size: 2em; font-weight: 700; text-align: center; margin: 40px 0 16px; letter-spacing: 0.05em; color: #E10600; }
+    .page-title { 
+      font-size: 3em; 
+      font-weight: 700; 
+      text-align: center; 
+      margin: 60px 0 40px; 
+      letter-spacing: 0.1em; 
+      color: #E10600;
+      text-transform: uppercase;
+    }
 
-    /* ---------- EVENT LIST ---------- */
-    .event-list {
-      margin-top: 32px;
+    /* ---------- EVENT GALLERY ---------- */
+    .event-gallery {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 30px;
+      margin: 40px 0;
     }
-    .event-item {
-      margin-bottom: 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
+    .event-image {
+      position: relative;
+      overflow: hidden;
+      border-radius: 12px;
+      aspect-ratio: 16/9;
+      cursor: pointer;
+      transition: transform 0.3s ease;
     }
-    .event-item h3 {
-      font-size: 1.3em; font-weight: 700; margin-bottom: 8px; letter-spacing: .04em; color: #fff;
+    .event-image:hover {
+      transform: scale(1.02);
     }
-    .event-item .date {
-      font-size: 0.95em; color: #E10600; margin-bottom: 8px;
+    .event-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
     }
-    .event-item p.description {
-      font-size: 1em; line-height: 1.8; color: #ccc;
+    .event-image:hover img {
+      transform: scale(1.1);
     }
-    .view-more {
-      display: inline-block; background: transparent; color: #E10600; font-weight: 700;
-      border: 2px solid #E10600; border-radius: 50px; padding: 10px 28px; font-size: 1em; letter-spacing: .06em;
-      margin-top: 16px; transition: all .3s ease;
+    .event-overlay {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      padding: 20px;
+      background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+      color: #fff;
     }
-    .view-more:hover { background: #E10600; color: #fff; }
+    .event-overlay h3 {
+      margin: 0;
+      font-size: 1.4em;
+      font-weight: 700;
+    }
+    .event-overlay p {
+      margin: 8px 0 0;
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    /* ---------- INFO SECTION ---------- */
+    .info-section {
+      text-align: center;
+      margin: 60px 0;
+      padding: 40px;
+      background: rgba(255,255,255,0.05);
+      border-radius: 16px;
+    }
+    .info-section h2 {
+      font-size: 2em;
+      margin-bottom: 20px;
+      color: #E10600;
+    }
+    .info-section p {
+      font-size: 1.1em;
+      line-height: 1.8;
+      color: #ccc;
+      max-width: 800px;
+      margin: 0 auto;
+    }
 
     /* ---------- RESERVE BUTTON ---------- */
     .reserve-btn {
-      display: block; background: #E10600; color: #fff; font-weight: 700;
-      border-radius: 50px; padding: 14px 36px; font-size: 1em; letter-spacing: .06em;
-      margin: 32px auto; width: 80%; max-width: 240px; text-align: center; transition: background .2s;
+      display: block;
+      background: #E10600;
+      color: #fff;
+      font-weight: 700;
+      border-radius: 50px;
+      padding: 16px 40px;
+      font-size: 1.1em;
+      letter-spacing: .1em;
+      margin: 40px auto;
+      width: 80%;
+      max-width: 300px;
+      text-align: center;
+      transition: all 0.3s ease;
+      text-transform: uppercase;
     }
-    .reserve-btn:hover { background: #b50000; }
+    .reserve-btn:hover {
+      background: #b50000;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(225,6,0,0.3);
+    }
 
     /* ---------- CONTACT/MAP/FOOTER ---------- */
-    .contact-info { text-align: center; font-size: .95em; margin: 32px 0 12px; line-height: 1.7; }
-    .map {
-      width: 100%; height: 200px; margin: 16px 0 24px; border-radius: 12px; overflow: hidden; box-shadow: 0 3px 18px rgba(0,0,0,0.2);
+    .contact-info {
+      text-align: center;
+      font-size: .95em;
+      margin: 32px 0 12px;
+      line-height: 1.7;
     }
-    .map iframe { width: 100%; height: 100%; border: 0; }
-    .sns { display: flex; gap: 16px; justify-content: center; margin-top: 16px; }
-    .sns img { width: 28px; height: 28px; filter: invert(1); transition: filter .22s; }
-    .sns a:hover img { filter: invert(34%) sepia(92%) saturate(6565%) hue-rotate(356deg) brightness(91%) contrast(130%); }
-    footer { text-align: center; color: #888; font-size: .85em; letter-spacing: .04em; margin: 24px 0 12px; }
+    .map {
+      width: 100%;
+      height: 300px;
+      margin: 16px 0 24px;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 3px 18px rgba(0,0,0,0.2);
+    }
+    .map iframe {
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+    .sns {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .sns img {
+      width: 28px;
+      height: 28px;
+      filter: invert(1);
+      transition: filter .22s;
+    }
+    .sns a:hover img {
+      filter: invert(34%) sepia(92%) saturate(6565%) hue-rotate(356deg) brightness(91%) contrast(130%);
+    }
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: .85em;
+      letter-spacing: .04em;
+      margin: 24px 0 12px;
+    }
 
     /* ---------- CUSTOM CURSOR ---------- */
     .cursor-dot, .cursor-dot-outline {
-      pointer-events: none; position: fixed; top: 0; left: 0; border-radius: 50%; opacity: 0;
-      transform: translate(-50%,-50%); transition: opacity .3s ease; z-index: 9999;
+      pointer-events: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      border-radius: 50%;
+      opacity: 0;
+      transform: translate(-50%,-50%);
+      transition: opacity .3s ease;
+      z-index: 9999;
     }
-    .cursor-dot { width: 8px; height: 8px; background: #E10600; }
-    .cursor-dot-outline { width: 36px; height: 36px; background: rgba(225,6,0,0.1); border: 1px solid rgba(225,6,0,0.5); }
-    .cursor-hover .cursor-dot { transform: translate(-50%,-50%) scale(1.5); background: #fff; }
-    .cursor-hover .cursor-dot-outline { transform: translate(-50%,-50%) scale(.8); background: rgba(225,6,0,0.2); }
-    a, button { cursor: none; }
+    .cursor-dot {
+      width: 8px;
+      height: 8px;
+      background: #E10600;
+    }
+    .cursor-dot-outline {
+      width: 36px;
+      height: 36px;
+      background: rgba(225,6,0,0.1);
+      border: 1px solid rgba(225,6,0,0.5);
+    }
+    .cursor-hover .cursor-dot {
+      transform: translate(-50%,-50%) scale(1.5);
+      background: #fff;
+    }
+    .cursor-hover .cursor-dot-outline {
+      transform: translate(-50%,-50%) scale(.8);
+      background: rgba(225,6,0,0.2);
+    }
+    a, button {
+      cursor: none;
+    }
     .cursor-trail {
-      pointer-events: none; position: fixed; width: 5px; height: 5px; background: rgba(225,6,0,0.3);
-      border-radius: 50%; z-index: 9998; opacity: 0; transform: translate(-50%,-50%);
+      pointer-events: none;
+      position: fixed;
+      width: 5px;
+      height: 5px;
+      background: rgba(225,6,0,0.3);
+      border-radius: 50%;
+      z-index: 9998;
+      opacity: 0;
+      transform: translate(-50%,-50%);
     }
-    @media(max-width:768px) { body { cursor: auto; } .cursor-dot, .cursor-dot-outline, .cursor-trail { display: none; } }
+    @media(max-width:768px) {
+      body { cursor: auto; }
+      .cursor-dot, .cursor-dot-outline, .cursor-trail { display: none; }
+      .event-gallery {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
@@ -107,7 +242,9 @@
   <!-- HEADER -->
   <div class="container">
     <header>
-      <img src="images/logo.jpg" alt="回帰 ロゴ" class="logo">
+      <a href="index.html">
+        <img src="images/logo.jpg" alt="回帰 ロゴ" class="logo">
+      </a>
       <nav>
         <a href="menu.html">MENU</a>
         <a href="art.html">ART &amp; DESIGN</a>
@@ -122,54 +259,53 @@
     <h2 class="page-title">EVENT</h2>
   </div>
 
-  <!-- EVENT LIST -->
+  <!-- EVENT GALLERY -->
   <div class="container">
-    <div class="event-list">
-      <!-- イベントごとに .event-item を追加 -->
-      <div class="event-item">
-        <h3>アコースティックライブ</h3>
-        <div class="date">毎週水曜日 19:00〜</div>
-        <p class="description">
-          リラックスした雰囲気で、お客様と近い距離で演奏をお楽しみいただけます。<br>
-          店内中央のステージで、毎週異なるアーティストがステージを飾ります。
-        </p>
-        <a href="#" class="view-more">詳細を見る</a>
+    <div class="event-gallery">
+      <div class="event-image">
+        <img src="images/event1.jpg" alt="ライブイベント">
+        <div class="event-overlay">
+          <h3>LIVE NIGHT</h3>
+          <p>毎週水曜日 19:00〜</p>
+        </div>
       </div>
-
-      <div class="event-item">
-        <h3>DJナイト</h3>
-        <div class="date">毎週金曜日 22:00〜</div>
-        <p class="description">
-          最新のクラブミュージックからレトロなディスコビートまで、DJが多彩な音楽で店内を盛り上げます。<br>
-          フロアではダンスフロアもオープン。ドリンク片手に夜を楽しんでください。
-        </p>
-        <a href="#" class="view-more">詳細を見る</a>
+      <div class="event-image">
+        <img src="images/event2.jpg" alt="DJイベント">
+        <div class="event-overlay">
+          <h3>DJ NIGHT</h3>
+          <p>毎週金曜日 22:00〜</p>
+        </div>
       </div>
-
-      <div class="event-item">
-        <h3>アーティストトーク</h3>
-        <div class="date">毎月第1土曜日 18:00〜</div>
-        <p class="description">
-          地元を中心に活躍するクリエイターをゲストに招き、制作秘話や今後のビジョンを語っていただきます。<br>
-          参加者からのQ&Aタイムもあり、クリエイターのリアルな声を間近で体感できます。
-        </p>
-        <a href="#" class="view-more">詳細を見る</a>
+      <div class="event-image">
+        <img src="images/event3.jpg" alt="アーティストトーク">
+        <div class="event-overlay">
+          <h3>ARTIST TALK</h3>
+          <p>毎月第1土曜日 18:00〜</p>
+        </div>
       </div>
-
-      <div class="event-item">
-        <h3>クリエイターワークショップ</h3>
-        <div class="date">毎月第3日曜日 15:00〜</div>
-        <p class="description">
-          グラフィックデザイン、写真撮影、DJテクニックなど、さまざまなテーマでワークショップを開催。<br>
-          初心者から上級者まで、幅広いスキル習得をサポートします。
-        </p>
-        <a href="#" class="view-more">詳細を見る</a>
+      <div class="event-image">
+        <img src="images/event4.jpg" alt="ワークショップ">
+        <div class="event-overlay">
+          <h3>WORKSHOP</h3>
+          <p>毎月第3日曜日 15:00〜</p>
+        </div>
       </div>
     </div>
   </div>
 
+  <!-- INFO SECTION -->
+  <div class="container">
+    <div class="info-section">
+      <h2>EVENT & PRIVATE HIRE</h2>
+      <p>
+        回帰では、定期的なイベントの他に、プライベートパーティーや企業イベントの貸切も承っております。<br>
+        イベントの主催や貸切についてのご相談は、お気軽にお問い合わせください。
+      </p>
+    </div>
+  </div>
+
   <!-- RESERVE BUTTON -->
-  <a href="contact.html#reserve" class="reserve-btn">ご予約はこちら</a>
+  <a href="contact.html#reserve" class="reserve-btn">ご予約・お問い合わせ</a>
 
   <!-- CONTACT INFO & MAP -->
   <div class="container">
@@ -197,7 +333,7 @@
     document.addEventListener('DOMContentLoaded', () => {
       const cursorDot = document.querySelector('.cursor-dot');
       const cursorOutline = document.querySelector('.cursor-dot-outline');
-      const hoverables = document.querySelectorAll('a, button, .reserve-btn, .view-more');
+      const hoverables = document.querySelectorAll('a, button, .reserve-btn, .event-image');
       let mouseX = 0, mouseY = 0, outlineX = 0, outlineY = 0, dotX = 0, dotY = 0;
       const trails = [], trailCount = 15;
       for (let i = 0; i < trailCount; i++) {
